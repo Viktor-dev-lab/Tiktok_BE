@@ -40,3 +40,4 @@ application-local.properties
 application-prod.properties
 uploads/
 logs/
+.env
