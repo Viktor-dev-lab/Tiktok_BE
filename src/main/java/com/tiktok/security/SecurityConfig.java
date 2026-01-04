@@ -38,6 +38,7 @@ public class SecurityConfig {
         .cors().and()
         .csrf().disable()
         .authorizeRequests()
+        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
         .antMatchers("/api/auth/**").permitAll()
         .antMatchers("/api/users").permitAll() // Public endpoint
         .antMatchers("/api/videos").permitAll()
@@ -78,14 +79,25 @@ public class SecurityConfig {
 
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    configuration.setAllowedHeaders(Arrays.asList("*"));
-    configuration.setAllowCredentials(true);
+      CorsConfiguration configuration = new CorsConfiguration();
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
-    return source;
+      configuration.setAllowedOrigins(List.of(
+              "http://localhost:3000",
+              "https://tiktok-fe.onrender.com"
+      ));
+
+      configuration.setAllowedMethods(List.of(
+              "GET", "POST", "PUT", "DELETE", "OPTIONS"
+      ));
+
+      configuration.setAllowedHeaders(List.of("*"));
+      configuration.setExposedHeaders(List.of("Authorization"));
+      configuration.setAllowCredentials(true);
+
+      UrlBasedCorsConfigurationSource source =
+              new UrlBasedCorsConfigurationSource();
+
+      source.registerCorsConfiguration("/**", configuration);
+      return source;
   }
 }
