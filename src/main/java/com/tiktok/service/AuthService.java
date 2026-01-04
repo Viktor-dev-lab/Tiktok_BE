@@ -41,6 +41,11 @@ public class AuthService {
   @Value("${jwt.expiration}")
   private Long jwtExpiration;
 
+  private String generateDefaultAvatar(String nickname) {
+      return "https://api.dicebear.com/7.x/personas/svg?seed=" + nickname;
+  }
+
+
   @Transactional
   public AuthResponse register(RegisterRequest request) {
     // Check if email exists
@@ -64,6 +69,7 @@ public class AuthService {
     user.setFollowingsCount(0);
     user.setFollowersCount(0);
     user.setLikesCount(0);
+    user.setAvatar(generateDefaultAvatar(request.getNickname()));
 
     user = userRepository.save(user);
 
