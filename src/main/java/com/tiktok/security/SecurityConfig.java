@@ -85,7 +85,7 @@ public class SecurityConfig {
 
       configuration.setAllowedOrigins(List.of(
               "http://localhost:3000",
-              "https://tiktok-fe-one.vercel.app",
+              "https://tiktok-fe-blush.vercel.app/",
               "https://tiktok-fe.onrender.com"
       ));
 
